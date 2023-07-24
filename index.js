@@ -55,8 +55,6 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
   }
 }
 
-matchesEnforcementOptions()
-
 module.exports = {
   matchesEnforcementOptions,
   presets: {
