@@ -41,6 +41,7 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
       }
     }
 
+    return result
   } catch (error) {
     // We shouldn't be relying on this code, this in the case one of the functions above
     // throws some kind of error, just to make sure the failure is seen
