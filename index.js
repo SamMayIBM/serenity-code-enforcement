@@ -15,7 +15,6 @@ const checks = require('./src/checks')
  */
 function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
   const directoryTree = getFileTree(rootDirectory)
-  console.log('JAMIE')
 
   try {
     // Here's where the magic happens! Let's start validating against the rules
