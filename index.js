@@ -25,10 +25,12 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
 
     if (enforcementOptions.allFilesStartWithLowerCase) {
       const testResult = checks.allFilesStartWithLowerCase(directoryTree)
+      
 
       if (testResult === false) {
         result.validated = false
         result.failureReasons.push('Not all of the files started with a lower case letter')
+        
       }
     }
 
@@ -38,6 +40,14 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
       if (testResult === false) {
         result.validated = false
         result.failureReasons.push('Not all of the files ended with a new line')
+      }
+    }
+    if (enforcementOptions.useStrictEverywhere) {
+      const testResult = checks.useStrictEverywhere(directoryTree)
+
+      if (testResult === false) {
+        result.validated = false
+        result.failureReasons.push('Not all of the files with suffix .js contain "use strict"')
       }
     }
 
