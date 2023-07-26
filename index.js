@@ -27,9 +27,9 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
       const testResult = checks.allFilesStartWithLowerCase(directoryTree)
       
 
-      if (testResult === false) {
+      if (testResult !== "") {
         result.validated = false
-        result.failureReasons.push('Not all of the files started with a lower case letter')
+        result.failureReasons.push(testResult + "file(s) do not start with a lower case letter.")
         
       }
     }
@@ -37,19 +37,41 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
     if (enforcementOptions.allFilesEndWithNewLine) {
       const testResult = checks.allFilesEndWithNewLine(directoryTree)
 
-      if (testResult === false) {
+      if (testResult !==  "") {
         result.validated = false
-        result.failureReasons.push('Not all of the files ended with a new line')
+        result.failureReasons.push(testResult+"file(s) don't end with a new line")
       }
     }
     if (enforcementOptions.useStrictEverywhere) {
       const testResult = checks.useStrictEverywhere(directoryTree)
 
-      if (testResult === false) {
+      if (testResult !== "") {
         result.validated = false
-        result.failureReasons.push('Not all of the files with suffix .js contain "use strict"')
+        result.failureReasons.push(testResult+"are .js file(s) which don't contain 'use strict'")
       }
+      
     }
+   if (enforcementOptions.functionKeywordForFunction) {
+     const testResult = checks.functionKeywordForFunction(directoryTree)
+
+      if (testResult !== "") {
+        result.validated = false
+        result.failureReasons.push("On "+testResult+  "the function(s) is/are not in the format, function x () {}")
+     }
+      
+   }
+    if (enforcementOptions.noConsoleLogs) {
+      const testResult = checks.noConsoleLogs(directoryTree)
+
+      if (testResult !== "") {
+        result.validated = false
+        result.failureReasons.push("On "+testResult+ "there is a console.log or console.error ")
+        
+      }
+      
+    }
+    
+    
 
     return result
   } catch (error) {

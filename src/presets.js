@@ -1,3 +1,5 @@
+const { allFunctionsInCorrectFormat } = require("./checks")
+
 const defaultPreset = {
   
   /*
@@ -32,7 +34,17 @@ const defaultPreset = {
   /*
     All files should end with a new line character (\n and nothing else on the final line)
   */
-  allFilesEndWithNewLine: true
+  allFilesEndWithNewLine: true,
+
+  /*
+    No console log in the source
+  */
+  noConsoleLogs:true,
+
+  noIstanbulIgnores:true
+
+
+  
 }
 
 const suproPreset = JSON.parse(JSON.stringify(defaultPreset))
