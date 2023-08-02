@@ -41,7 +41,9 @@ const defaultPreset = {
   */
   noConsoleLogs:true,
 
-  noIstanbulIgnores:true
+  noIstanbulIgnores:true,
+  
+  numberOfParamFunctionJSDoc:true
 
 
   

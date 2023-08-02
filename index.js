@@ -65,11 +65,30 @@ function matchesEnforcementOptions (rootDirectory, enforcementOptions) {
 
       if (testResult !== "") {
         result.validated = false
-        result.failureReasons.push("On "+testResult+ "there is a console.log or console.error ")
+        result.failureReasons.push("On "+testResult+ "there is/are a console.log or console.error ")
         
       }
       
     }
+    if (enforcementOptions.noIstanbulIgnores) {
+      const testResult = checks.noIstanbulIgnores(directoryTree)
+
+      if (testResult !== "") {
+        result.validated = false
+        result.failureReasons.push("On "+testResult+ "there is/are an 'istanbul ignore'")
+        
+      }
+    }
+    if (enforcementOptions.numberOfParamFunctionJSDoc) {
+      const testResult = checks.numberOfParamFunctionJSDoc(directoryTree)
+      if (testResult !== "") {
+        result.validated = false
+        result.failureReasons.push(testResult)
+          
+      }
+      
+    }
+  
     
     
 
