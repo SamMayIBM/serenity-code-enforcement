@@ -4,9 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run lint:fix",
+    "test": "nyc --all --reporter=cobertura --reporter=html --reporter=text ts-mocha -p ./tsconfig.json --paths ./test/*-test.ts ./test/**/*-test.ts",
+    "build": "tsc",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Samuel May <samuel.may@ibm.com>, Jamie Klinger",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.10",
+    "@types/sinon": "^10.0.16",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.47.0",
+    "eslint-config-standard-with-typescript": "^37.0.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nyc": "^15.1.0",
+    "sinon": "^15.2.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.1.6"
+  }
 }
