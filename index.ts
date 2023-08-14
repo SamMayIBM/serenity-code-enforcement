@@ -4,7 +4,7 @@ import {
   fileMustUseStrictIfECMA,
   fileMustEndWithEmptyNewLine
  } from './src/checks'
-import { EnforcementOptions } from './src/presets'
+import { DefaultEnforcementOptions, EnforcementOptions } from './src/presets'
 import { FileInformation, Discrepancy } from "./src/types"
 
 export interface TestResults {
@@ -18,10 +18,14 @@ export interface TestResults {
  * @param enforcementOptions - The choice of enforcement options to run
  * @returns - A Test Result indicating if all of the checks have been met by the code
  */
-function runEnforcementChecks (directoryTree: FileInformation[], enforcementOptions: EnforcementOptions): TestResults { 
+function runEnforcementChecks (directoryTree: FileInformation[], enforcementOptions?: EnforcementOptions): TestResults { 
   const results: TestResults = {
     hasPassed: true,
     failures: []
+  }
+
+  if (!enforcementOptions) {
+    enforcementOptions = DefaultEnforcementOptions
   }
 
   for (const file of directoryTree) {
