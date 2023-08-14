@@ -12,6 +12,12 @@ export interface TestResults {
   failures: Discrepancy[]
 }
 
+/**
+ * Runs the individual checks against all of the files sequentially
+ * @param directoryTree - A flattened array of all of the files in the directory
+ * @param enforcementOptions - The choice of enforcement options to run
+ * @returns - A Test Result indicating if all of the checks have been met by the code
+ */
 function runEnforcementChecks (directoryTree: FileInformation[], enforcementOptions: EnforcementOptions): TestResults { 
   const results: TestResults = {
     hasPassed: true,
