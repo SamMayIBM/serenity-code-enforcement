@@ -1,13 +1,12 @@
-const { allFunctionsInCorrectFormat } = require("./checks")
+'use strict'
 
-const defaultPreset = {
-  
+export interface EnforcementOptions {
   /*
     Specifies that the names of all files in the repository start with
     a lower case letter, except where there is no way around the name of
     the file (for instance with Dockerfile)
   */
-  allFilesStartWithLowerCase: true,
+  allFilesStartWithLowerCase?: boolean,
 
   /*
     Definitions of functions should use the function keyword at the start
@@ -22,36 +21,43 @@ const defaultPreset = {
 
     const x = function () {}
   */
-  functionKeywordForFunction: true,
+  functionKeywordForFunction?: boolean,
 
   /*
     All JS Source files should start with the 'use strict' identifier
 
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
   */
-  useStrictEverywhere: true,
+  useStrictEverywhere?: boolean,
 
   /*
     All files should end with a new line character (\n and nothing else on the final line)
   */
-  allFilesEndWithNewLine: true,
+  allFilesEndWithNewLine?: boolean,
 
   /*
     No console log in the source
   */
-  noConsoleLogs:true,
+  noConsoleLogs?: boolean,
 
-  noIstanbulIgnores:true,
-  
-  numberOfParamFunctionJSDoc:true
+  /*
+    There are no instanbul ignore <any> in the source code
+  */
+  noIstanbulIgnores?: boolean,
 
-
-  
+  /*
+    The number of parameters in all JS Doc comments align with the number of actual 
+    parameters in the function
+  */
+  numberOfParamFunctionJSDoc?: boolean
 }
 
-const suproPreset = JSON.parse(JSON.stringify(defaultPreset))
-
-module.exports = {
-  defaultPreset,
-  suproPreset
+export const DefaultEnforcementOptions: EnforcementOptions = {
+  allFilesStartWithLowerCase: true,
+  functionKeywordForFunction: true,
+  useStrictEverywhere: true,
+  allFilesEndWithNewLine: true,
+  noConsoleLogs: true,
+  noIstanbulIgnores: true,
+  numberOfParamFunctionJSDoc: true
 }
