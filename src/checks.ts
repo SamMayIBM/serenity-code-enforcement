@@ -3,7 +3,7 @@
 import { FileInformation, Discrepancy } from "./types"
 
 /**
- * Generats a human-readable string containing details of the error
+ * Generates a human-readable string containing details of the error
  * @param fileName - Name of the offending file
  * @param ruleTitle - Title and purpose of the test that has been breached
  * @returns - A human-readable string containing the details of the error
@@ -130,7 +130,7 @@ export function noIstanbulIgnores (file: FileInformation): Discrepancy | undefin
 }
 
 /**
- * Checks to ensure there are no istanbul ignores in the code
+ * Checks to ensure there are no console logs in the code
  * @param file - Information for the provided file
  * @returns - A discrepancy with more information, or nothing if it does not break the rule
  */
