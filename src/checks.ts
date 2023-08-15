@@ -31,8 +31,6 @@ export function filesMustStartWithLowerCaseChar (file: FileInformation): Discrep
       message: generateFailureMessage(file.fileName, 'All files must start with a lower case character')
     }
   }
-
-  return
 }
 
 
