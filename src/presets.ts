@@ -1,5 +1,7 @@
 'use strict'
 
+import { awaitKeywordForAsync } from "./checks"
+
 export interface EnforcementOptions {
   /*
     Specifies that the names of all files in the repository start with
@@ -50,6 +52,16 @@ export interface EnforcementOptions {
     parameters in the function
   */
   numberOfParamFunctionJSDoc?: boolean
+
+  /*
+    All strings concatenation should use `${}` and not use the + 
+  */
+  dollarSignForStrConcat?: boolean
+
+  /*
+    All asynchronous processing should use the await keyword and not the .then() method
+  */
+  awaitKeywordForAsync?: boolean
 }
 
 export const DefaultEnforcementOptions: EnforcementOptions = {
@@ -59,5 +71,7 @@ export const DefaultEnforcementOptions: EnforcementOptions = {
   allFilesEndWithNewLine: true,
   noConsoleLogs: true,
   noIstanbulIgnores: true,
-  numberOfParamFunctionJSDoc: true
+  numberOfParamFunctionJSDoc: true,
+  dollarSignForStrConcat: true,
+  awaitKeywordForAsync: true
 }

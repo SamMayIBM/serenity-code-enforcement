@@ -6,7 +6,9 @@ import {
   functionKeywordForFunction,
   allFunctionsShouldHaveAJsdoc,
   noIstanbulIgnores,
-  noConsoleLogs
+  noConsoleLogs,
+  dollarSignForStrConcat,
+  awaitKeywordForAsync
  } from './src/checks'
 import { DefaultEnforcementOptions, EnforcementOptions } from './src/presets'
 import { FileInformation, Discrepancy } from "./src/types"
@@ -77,6 +79,20 @@ function runEnforcementChecks (directoryTree: FileInformation[], enforcementOpti
 
     if (enforcementOptions.noConsoleLogs) {
       const result = noConsoleLogs(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.dollarSignForStrConcat) {
+      const result = dollarSignForStrConcat(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.awaitKeywordForAsync) {
+      const result = awaitKeywordForAsync(file)
       if (result) {
         results.failures.push(result)
       }

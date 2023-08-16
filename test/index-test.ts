@@ -20,6 +20,8 @@ describe('Exported Test Runner tests', () => {
       let allFunctionsShouldHaveAJsdocStub: sinon.SinonStub
       let noIstanbulIgnoresStub: sinon.SinonStub
       let noConsoleLogsStub: sinon.SinonStub
+      let dollarSignForStrConcatStub: sinon.SinonStub
+      let awaitKeywordForAsyncStub: sinon.SinonStub
 
       beforeEach(() => {
         getFileTreeStub = sinon.stub(repoIntrospection, 'getFileTree').returns([
@@ -37,6 +39,8 @@ describe('Exported Test Runner tests', () => {
         allFunctionsShouldHaveAJsdocStub = sinon.stub(fsInspectionChecks, 'allFunctionsShouldHaveAJsdoc')
         noIstanbulIgnoresStub = sinon.stub(fsInspectionChecks, 'noIstanbulIgnores')
         noConsoleLogsStub = sinon.stub(fsInspectionChecks, 'noConsoleLogs')
+        dollarSignForStrConcatStub = sinon.stub(fsInspectionChecks, 'dollarSignForStrConcat')
+        awaitKeywordForAsyncStub = sinon.stub(fsInspectionChecks, 'awaitKeywordForAsync')
       })
 
       afterEach(() => {
@@ -48,6 +52,8 @@ describe('Exported Test Runner tests', () => {
         allFunctionsShouldHaveAJsdocStub.restore()
         noIstanbulIgnoresStub.restore()
         noConsoleLogsStub.restore()
+        dollarSignForStrConcatStub.restore()
+        awaitKeywordForAsyncStub.restore()
       })
 
       it('Should return test passed if none of the checks return a discrepancy', () => {
@@ -70,10 +76,12 @@ describe('Exported Test Runner tests', () => {
         allFunctionsShouldHaveAJsdocStub.returns(testDiscrepancy)
         noIstanbulIgnoresStub.returns(testDiscrepancy)
         noConsoleLogsStub.returns(testDiscrepancy)
+        dollarSignForStrConcatStub.returns(testDiscrepancy)
+        awaitKeywordForAsyncStub.returns(testDiscrepancy)
 
         const result: TestResults = runTest('src', DefaultEnforcementOptions)
         expect(result.hasPassed).to.equal(false)
-        expect(result.failures.length).to.equal(7)
+        expect(result.failures.length).to.equal(9)
       })
 
       it('Should throw an exception if one of the internal checks throws an error', () => {
@@ -96,7 +104,9 @@ describe('Exported Test Runner tests', () => {
           allFilesEndWithNewLine: false,
           noConsoleLogs: false,
           noIstanbulIgnores: false,
-          numberOfParamFunctionJSDoc: false
+          numberOfParamFunctionJSDoc: false,
+          dollarSignForStrConcat: false,
+          awaitKeywordForAsync: false
         }
 
         const result: TestResults = runTest('src', disabledOptions)
