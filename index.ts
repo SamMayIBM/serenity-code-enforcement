@@ -2,7 +2,11 @@ import { getFileTree } from './src/repositoryIntrospection'
 import { 
   filesMustStartWithLowerCaseChar,
   fileMustUseStrictIfECMA,
-  fileMustEndWithEmptyNewLine
+  fileMustEndWithEmptyNewLine,
+  functionKeywordForFunction,
+  allFunctionsShouldHaveAJsdoc,
+  noIstanbulIgnores,
+  noConsoleLogs
  } from './src/checks'
 import { DefaultEnforcementOptions, EnforcementOptions } from './src/presets'
 import { FileInformation, Discrepancy } from "./src/types"
@@ -45,6 +49,34 @@ function runEnforcementChecks (directoryTree: FileInformation[], enforcementOpti
 
     if (enforcementOptions.useStrictEverywhere) {
       const result = fileMustUseStrictIfECMA(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.functionKeywordForFunction) {
+      const result = functionKeywordForFunction(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.numberOfParamFunctionJSDoc) {
+      const result = allFunctionsShouldHaveAJsdoc(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.noIstanbulIgnores) {
+      const result = noIstanbulIgnores(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+
+    if (enforcementOptions.noConsoleLogs) {
+      const result = noConsoleLogs(file)
       if (result) {
         results.failures.push(result)
       }

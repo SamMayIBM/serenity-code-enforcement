@@ -1,4 +1,4 @@
-const { exec } = require("child_process")
+const { exec } = require('child_process')
 const utils = require('util')
 const execute = utils.promisify(exec)
 

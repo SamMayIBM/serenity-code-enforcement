@@ -16,6 +16,10 @@ describe('Exported Test Runner tests', () => {
       let fileMustEndWithEmptyNewLineStub: sinon.SinonStub
       let filesMustStartWithLowerCaseCharStub: sinon.SinonStub
       let fileMustUseStrictIfECMAStub: sinon.SinonStub
+      let functionKeywordForFunctionStub: sinon.SinonStub
+      let allFunctionsShouldHaveAJsdocStub: sinon.SinonStub
+      let noIstanbulIgnoresStub: sinon.SinonStub
+      let noConsoleLogsStub: sinon.SinonStub
 
       beforeEach(() => {
         getFileTreeStub = sinon.stub(repoIntrospection, 'getFileTree').returns([
@@ -29,6 +33,10 @@ describe('Exported Test Runner tests', () => {
         fileMustEndWithEmptyNewLineStub = sinon.stub(fsInspectionChecks, 'fileMustEndWithEmptyNewLine')
         filesMustStartWithLowerCaseCharStub = sinon.stub(fsInspectionChecks, 'filesMustStartWithLowerCaseChar')
         fileMustUseStrictIfECMAStub = sinon.stub(fsInspectionChecks, 'fileMustUseStrictIfECMA')
+        functionKeywordForFunctionStub = sinon.stub(fsInspectionChecks, 'functionKeywordForFunction')
+        allFunctionsShouldHaveAJsdocStub = sinon.stub(fsInspectionChecks, 'allFunctionsShouldHaveAJsdoc')
+        noIstanbulIgnoresStub = sinon.stub(fsInspectionChecks, 'noIstanbulIgnores')
+        noConsoleLogsStub = sinon.stub(fsInspectionChecks, 'noConsoleLogs')
       })
 
       afterEach(() => {
@@ -36,6 +44,10 @@ describe('Exported Test Runner tests', () => {
         fileMustEndWithEmptyNewLineStub.restore()
         filesMustStartWithLowerCaseCharStub.restore()
         fileMustUseStrictIfECMAStub.restore()
+        functionKeywordForFunctionStub.restore()
+        allFunctionsShouldHaveAJsdocStub.restore()
+        noIstanbulIgnoresStub.restore()
+        noConsoleLogsStub.restore()
       })
 
       it('Should return test passed if none of the checks return a discrepancy', () => {
@@ -54,10 +66,14 @@ describe('Exported Test Runner tests', () => {
         fileMustEndWithEmptyNewLineStub.returns(testDiscrepancy)
         filesMustStartWithLowerCaseCharStub.returns(testDiscrepancy)
         fileMustUseStrictIfECMAStub.returns(testDiscrepancy)
+        functionKeywordForFunctionStub.returns(testDiscrepancy)
+        allFunctionsShouldHaveAJsdocStub.returns(testDiscrepancy)
+        noIstanbulIgnoresStub.returns(testDiscrepancy)
+        noConsoleLogsStub.returns(testDiscrepancy)
 
         const result: TestResults = runTest('src', DefaultEnforcementOptions)
         expect(result.hasPassed).to.equal(false)
-        expect(result.failures.length).to.equal(3)
+        expect(result.failures.length).to.equal(7)
       })
 
       it('Should throw an exception if one of the internal checks throws an error', () => {
