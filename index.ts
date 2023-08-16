@@ -83,7 +83,6 @@ function runEnforcementChecks (directoryTree: FileInformation[], enforcementOpti
         results.failures.push(result)
       }
     }
-
     if (enforcementOptions.dollarSignForStrConcat) {
       const result = dollarSignForStrConcat(file)
       if (result) {

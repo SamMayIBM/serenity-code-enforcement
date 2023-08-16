@@ -4,6 +4,7 @@ import { expect } from 'chai'
 import { Discrepancy } from '../../src/types'
 import { filesMustStartWithLowerCaseChar, fileMustUseStrictIfECMA, fileMustEndWithEmptyNewLine, functionKeywordForFunction, allFunctionsShouldHaveAJsdoc, noIstanbulIgnores, noConsoleLogs, dollarSignForStrConcat, awaitKeywordForAsync } from '../../src/checks'
 
+
 describe('File System Inspection Checks', () => {
   describe('filesMustStartWithLowerCaseChar', () => {
     it('Should not return a discrepancy if the file starts with a lower case character', () => {
@@ -269,6 +270,5 @@ describe('File System Inspection Checks', () => {
       expect(result?.message).to.satisfy(message => message.includes('All asynchronous processing should use the await keyword'))
     })
   })
-
  
 })

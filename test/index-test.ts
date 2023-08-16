@@ -82,6 +82,10 @@ describe('Exported Test Runner tests', () => {
         const result: TestResults = runTest('src', DefaultEnforcementOptions)
         expect(result.hasPassed).to.equal(false)
         expect(result.failures.length).to.equal(9)
+
+        const result: TestResults = runTest('src', DefaultEnforcementOptions)
+        expect(result.hasPassed).to.equal(false)
+        expect(result.failures.length).to.equal(7)
       })
 
       it('Should throw an exception if one of the internal checks throws an error', () => {
