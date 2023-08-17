@@ -145,8 +145,6 @@ export function noConsoleLogs (file: FileInformation): Discrepancy | undefined {
     }
   }
 }
-<<<<<<< Updated upstream
-=======
 
 /**
  * Checks to ensure there are no string concatenations written in the form "" + "" or '' + ''
@@ -185,4 +183,3 @@ export function awaitKeywordForAsync(file: FileInformation): Discrepancy | undef
     }
   }
 }
->>>>>>> Stashed changes

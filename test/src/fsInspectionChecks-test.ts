@@ -2,7 +2,7 @@
 
 import { expect } from 'chai'
 import { Discrepancy } from '../../src/types'
-import { filesMustStartWithLowerCaseChar, fileMustUseStrictIfECMA, fileMustEndWithEmptyNewLine, functionKeywordForFunction, allFunctionsShouldHaveAJsdoc, noIstanbulIgnores, noConsoleLogs,  } from '../../src/checks'
+import { filesMustStartWithLowerCaseChar, fileMustUseStrictIfECMA, fileMustEndWithEmptyNewLine, functionKeywordForFunction, allFunctionsShouldHaveAJsdoc, noIstanbulIgnores, noConsoleLogs, dollarSignForStrConcat, awaitKeywordForAsync } from '../../src/checks'
 
 describe('File System Inspection Checks', () => {
   describe('filesMustStartWithLowerCaseChar', () => {
@@ -232,8 +232,6 @@ describe('File System Inspection Checks', () => {
     })
   })
 
-<<<<<<< Updated upstream
-=======
   describe('dollarSignForStrConcat', () => {
     it('Should not return a discrepancy if the file does not have any " + " string concacatenations ', () => {
       let result: Discrepancy | undefined = dollarSignForStrConcat({
@@ -274,6 +272,5 @@ describe('File System Inspection Checks', () => {
     })
   })
 
->>>>>>> Stashed changes
  
 })
