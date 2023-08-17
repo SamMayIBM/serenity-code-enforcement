@@ -76,7 +76,7 @@ export function fileMustEndWithEmptyNewLine (file: FileInformation): Discrepancy
 export function functionKeywordForFunction (file: FileInformation): Discrepancy | undefined {
   const lines: string[] = file.content.replace(/\r\n/g,'\n').split('\n')
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-    if (lines[lineIndex].includes('= function') || lines[lineIndex].includes(') =>')) {
+    if (lines[lineIndex].match(/=\s*function/) || lines[lineIndex].match(/\)\s*=>/)) {
       return {
         fileName: file.fileName,
         path: file.path,
@@ -116,7 +116,7 @@ export function allFunctionsShouldHaveAJsdoc (file: FileInformation): Discrepanc
 export function noIstanbulIgnores (file: FileInformation): Discrepancy | undefined {
   const lines: string[] = file.content.replace(/\r\n/g,'\n').split('\n')
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-    if (lines[lineIndex].includes('istanbul ignore')) {
+    if (lines[lineIndex].match(/istanbul\s+ignore/)) {
       return {
         fileName: file.fileName,
         path: file.path,
@@ -145,3 +145,44 @@ export function noConsoleLogs (file: FileInformation): Discrepancy | undefined {
     }
   }
 }
+<<<<<<< Updated upstream
+=======
+
+/**
+ * Checks to ensure there are no string concatenations written in the form "" + "" or '' + ''
+ * @param file - Information for the provided file
+ * @returns - A discrepancy with more information, or nothing if it does not break the rule
+ */
+export function dollarSignForStrConcat (file: FileInformation): Discrepancy | undefined {
+  const lines: string[] = file.content.replace(/\r\n/g,'\n').split('\n')
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    if (lines[lineIndex].match(/\"\s*[+]\s*\"|\'\s*[+]\s*\'/)) {
+      return {
+        fileName: file.fileName,
+        path: file.path,
+        message: generateFailureMessage(file.fileName, 'All string concatenations should be in the format `${}`', lineIndex),
+        lineNumber: lineIndex
+      }
+    }
+  }
+}
+
+/**
+ * Checks to ensure there are no occurences of .then for asynchronous processing
+ * @param file - Information for the provided file
+ * @returns - A discrepancy with more information, or nothing if it does not break the rule
+ */
+export function awaitKeywordForAsync(file: FileInformation): Discrepancy | undefined {
+  const lines: string[] = file.content.replace(/\r\n/g,'\n').split('\n')
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    if (lines[lineIndex].includes('.then')) {
+      return {
+        fileName: file.fileName,
+        path: file.path,
+        message: generateFailureMessage(file.fileName, 'All asynchronous processing should use the await keyword', lineIndex),
+        lineNumber: lineIndex
+      }
+    }
+  }
+}
+>>>>>>> Stashed changes
