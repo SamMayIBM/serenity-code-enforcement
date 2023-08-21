@@ -2,7 +2,7 @@
 
 import { expect } from 'chai'
 import { Discrepancy } from '../../src/types'
-import { filesMustStartWithLowerCaseChar, fileMustUseStrictIfECMA, fileMustEndWithEmptyNewLine, functionKeywordForFunction, allFunctionsShouldHaveAJsdoc, noIstanbulIgnores, noConsoleLogs,  } from '../../src/checks'
+import { filesMustStartWithLowerCaseChar, fileMustUseStrictIfECMA, fileMustEndWithEmptyNewLine, functionKeywordForFunction, allFunctionsShouldHaveAJsdoc, noIstanbulIgnores, noConsoleLogs, dollarSignForStrConcat, awaitKeywordForAsync } from '../../src/checks'
 
 describe('File System Inspection Checks', () => {
   describe('filesMustStartWithLowerCaseChar', () => {
@@ -217,6 +217,58 @@ describe('File System Inspection Checks', () => {
       })
       expect(result).to.not.equal(undefined)
       expect(result?.message).to.satisfy(message => message.includes('There should be no console logs in the code'))
+    })
+    it('Should return a discrepancy if the file has console errors', () => {
+      let result: Discrepancy | undefined = noConsoleLogs({
+        fileName: 'a.js',
+        content: `hello world
+        console.error("warning")
+        bye
+        `,
+        path: 'b/a.js'
+      })
+      expect(result).to.not.equal(undefined)
+      expect(result?.message).to.satisfy(message => message.includes('There should be no console logs in the code'))
+    })
+  })
+
+  describe('dollarSignForStrConcat', () => {
+    it('Should not return a discrepancy if the file does not have any " + " string concacatenations ', () => {
+      let result: Discrepancy | undefined = dollarSignForStrConcat({
+        fileName: 'a.js',
+        content: '(Your name is `${name}`)',
+        path: 'b/a.js'
+      })
+      expect(result).to.equal(undefined)
+    })
+    it('Should return a discrepancy if the file has any " + " string concatenations', () => {
+      let result: Discrepancy | undefined = dollarSignForStrConcat({
+        fileName: 'a.js',
+        content: ' "hello" +            "world" ',
+        path: 'b/a.js'
+      })
+      expect(result).to.not.equal(undefined)
+      expect(result?.message).to.satisfy(message => message.includes('All string concatenations should be in the format `${}`'))
+    })
+  })
+
+  describe('awaitKeywordForAsync', () => {
+    it('Should not return a discrepancy if the file does not contain any occurences of .then', () => {
+      let result: Discrepancy | undefined = awaitKeywordForAsync({
+        fileName: 'a.js',
+        content: 'hello world',
+        path: 'b/a.js'
+      })
+      expect(result).to.equal(undefined)
+    })
+    it('Should return a discrepancy if the file has any occurences of .then', () => {
+      let result: Discrepancy | undefined = awaitKeywordForAsync({
+        fileName: 'a.js',
+        content: 'score.then(value => {})',
+        path: 'b/a.js'
+      })
+      expect(result).to.not.equal(undefined)
+      expect(result?.message).to.satisfy(message => message.includes('All asynchronous processing should use the await keyword'))
     })
   })
 

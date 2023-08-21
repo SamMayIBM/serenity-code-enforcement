@@ -13,7 +13,7 @@ import { FileInformation, Discrepancy } from "./src/types"
 
 export interface TestResults {
   hasPassed: boolean,
-  failures: Discrepancy[]
+  failures: Discrepancy[],
 }
 
 /**
@@ -25,7 +25,7 @@ export interface TestResults {
 function runEnforcementChecks (directoryTree: FileInformation[], enforcementOptions?: EnforcementOptions): TestResults { 
   const results: TestResults = {
     hasPassed: true,
-    failures: []
+    failures: [],
   }
 
   if (!enforcementOptions) {
