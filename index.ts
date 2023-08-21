@@ -6,14 +6,17 @@ import {
   functionKeywordForFunction,
   allFunctionsShouldHaveAJsdoc,
   noIstanbulIgnores,
-  noConsoleLogs
+  noConsoleLogs,
+  dollarSignForStrConcat,
+  awaitKeywordForAsync
  } from './src/checks'
 import { DefaultEnforcementOptions, EnforcementOptions } from './src/presets'
 import { FileInformation, Discrepancy } from "./src/types"
 
 export interface TestResults {
   hasPassed: boolean,
-  failures: Discrepancy[]
+  failures: Discrepancy[],
+  warnings: Discrepancy[]
 }
 
 /**
@@ -25,7 +28,8 @@ export interface TestResults {
 function runEnforcementChecks (directoryTree: FileInformation[], enforcementOptions?: EnforcementOptions): TestResults { 
   const results: TestResults = {
     hasPassed: true,
-    failures: []
+    failures: [],
+    warnings: []
   }
 
   if (!enforcementOptions) {
@@ -33,50 +37,64 @@ function runEnforcementChecks (directoryTree: FileInformation[], enforcementOpti
   }
 
   for (const file of directoryTree) {
-    if (enforcementOptions.allFilesEndWithNewLine) {
+    if (enforcementOptions.requirementOptions.allFilesEndWithNewLine) {
       const result = fileMustEndWithEmptyNewLine(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.allFilesStartWithLowerCase) {
+    if (enforcementOptions.requirementOptions.allFilesStartWithLowerCase) {
       const result = filesMustStartWithLowerCaseChar(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.useStrictEverywhere) {
+    if (enforcementOptions.requirementOptions.useStrictEverywhere) {
       const result = fileMustUseStrictIfECMA(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.functionKeywordForFunction) {
+    if (enforcementOptions.requirementOptions.functionKeywordForFunction) {
       const result = functionKeywordForFunction(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.numberOfParamFunctionJSDoc) {
+    if (enforcementOptions.requirementOptions.numberOfParamFunctionJSDoc) {
       const result = allFunctionsShouldHaveAJsdoc(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.noIstanbulIgnores) {
+    if (enforcementOptions.warningOptions.noIstanbulIgnores) {
       const result = noIstanbulIgnores(file)
+      if (result) {
+        results.warnings.push(result)
+      }
+    }
+
+    if (enforcementOptions.requirementOptions.noConsoleLogs) {
+      const result = noConsoleLogs(file)
+      if (result) {
+        results.failures.push(result)
+      }
+    }
+    
+    if (enforcementOptions.requirementOptions.dollarSignForStrConcat) {
+      const result = dollarSignForStrConcat(file)
       if (result) {
         results.failures.push(result)
       }
     }
 
-    if (enforcementOptions.noConsoleLogs) {
-      const result = noConsoleLogs(file)
+    if (enforcementOptions.requirementOptions.awaitKeywordForAsync) {
+      const result = awaitKeywordForAsync(file)
       if (result) {
         results.failures.push(result)
       }
