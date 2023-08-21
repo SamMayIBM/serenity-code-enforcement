@@ -1,8 +1,6 @@
 'use strict'
 
-import { dollarSignForStrConcat } from "./checks"
-
-export interface EnforcementOptions {
+export interface RequirementOptions{
     /*
     Specifies that the names of all files in the repository start with
     a lower case letter, except where there is no way around the name of
@@ -43,37 +41,46 @@ export interface EnforcementOptions {
     noConsoleLogs?: boolean,
   
     /*
-      There are no instanbul ignore <any> in the source code
-    */
-    noIstanbulIgnores?: boolean,
-  
-    /*
       The number of parameters in all JS Doc comments align with the number of actual 
       parameters in the function
     */
-    numberOfParamFunctionJSDoc?: boolean
+    numberOfParamFunctionJSDoc?: boolean,
   
     /*
       All strings concatenation should use `${}` and not use the + 
     */
-    dollarSignForStrConcat?: boolean
+    dollarSignForStrConcat?: boolean,
   
     /*
       All asynchronous processing should use the await keyword and not the .then() method
     */
     awaitKeywordForAsync?: boolean
-  
+}
+
+export interface WarningOptions{
+  /*
+    There are no instanbul ignore <any> in the source code
+  */
+  noIstanbulIgnores?: boolean,
+}
+export interface EnforcementOptions {
+    requirementOptions: RequirementOptions,
+    warningOptions: WarningOptions
 }
   
-
+//following options can be toggled depending on what quality checks are required/desired
 export const DefaultEnforcementOptions: EnforcementOptions = {
-  allFilesStartWithLowerCase: true,
-  functionKeywordForFunction: true,
-  useStrictEverywhere: true,
-  allFilesEndWithNewLine: true,
-  noConsoleLogs: true,
-  noIstanbulIgnores: true,
-  numberOfParamFunctionJSDoc: true,
-  dollarSignForStrConcat: true,
-  awaitKeywordForAsync: true
+  requirementOptions:{
+    allFilesStartWithLowerCase: true,
+    functionKeywordForFunction: true,
+    useStrictEverywhere: true,
+    allFilesEndWithNewLine: true,
+    noConsoleLogs: true,
+    numberOfParamFunctionJSDoc: true,
+    dollarSignForStrConcat: true,
+    awaitKeywordForAsync: true
+  },
+  warningOptions:{
+    noIstanbulIgnores: true,
+  }
 }
